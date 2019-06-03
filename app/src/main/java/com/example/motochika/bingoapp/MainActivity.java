@@ -21,8 +21,10 @@ public class MainActivity extends AppCompatActivity {
     private EditText maxNumberEditText;
     private Button registerMaxNumberButton;
     private Button nextNumberButton;
+    private Button resetButton;
     private TextView currentNumberTextView;
     private TextView historyTextView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         maxNumberEditText = findViewById(R.id.max_number);
         registerMaxNumberButton = findViewById(R.id.register_max_number);
         nextNumberButton = findViewById(R.id.next_number);
+        resetButton = findViewById(R.id.reset_button);
         currentNumberTextView = findViewById(R.id.current_number);
         historyTextView = findViewById(R.id.history);
 
@@ -57,16 +60,27 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        resetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                deleteNumbers();
+
+                Log.d("MainActivity", "deleted");
+            }
+        });
+
     }
-    private void onClickNextNumber(){
-        Log.d("MainActivity","onClickNextNumber");
+
+    private void onClickNextNumber() {
+        Log.d("MainActivity", "onClickNextNumber");
 
         //maxNumberを考慮したランダムな数値
         int nextNumber = createRandomNumber();
 
         //重複があれば数値の再生成
-        while(history.contains("" + nextNumber)){
-            Log.d("MainActivity","重複したので再生成");
+        while (history.contains("" + nextNumber)) {
+            Log.d("MainActivity", "重複したので再生成");
             nextNumber = createRandomNumber();
         }
 
@@ -82,12 +96,19 @@ public class MainActivity extends AppCompatActivity {
         //履歴の表示
         historyTextView.setText(history.toString());
 
-        Log.d("MainActivity",history.toString());
+        Log.d("MainActivity", history.toString());
 
     }
 
     //maxNumberを考慮したランダムな数値の生成
-    private int createRandomNumber(){
+    private int createRandomNumber() {
         return new Random().nextInt(maxNumber) + 1;
+    }
+
+    private void deleteNumbers() {
+        maxNumberEditText.setText("");
+        historyTextView.setText("");
+        currentNumberTextView.setText("0");
+
     }
 }
