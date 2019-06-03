@@ -105,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
         return new Random().nextInt(maxNumber) + 1;
     }
 
+    //数字の全リセット
     private void deleteNumbers() {
         maxNumberEditText.setText("");
         historyTextView.setText("");
